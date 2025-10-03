@@ -124,3 +124,24 @@ mostrarReseñas();
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
 }
+
+// Instalación PWA
+let deferredPrompt;
+const btnInstalar = document.getElementById("btnInstalar");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  btnInstalar.classList.remove("hidden");
+});
+
+btnInstalar.addEventListener("click", async () => {
+  btnInstalar.classList.add("hidden");
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === "accepted") {
+    console.log("App instalada");
+  }
+  deferredPrompt = null;
+});
+
