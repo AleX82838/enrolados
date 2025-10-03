@@ -1,15 +1,14 @@
 // Loader
 window.addEventListener("load", () => {
-  const loader = document.getElementById("loader");
-  const content = document.getElementById("content");
-  loader.style.display = "none";
-  content.classList.remove("hidden");
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("content").classList.remove("hidden");
+  }, 1000);
 });
 
 // Bienvenida personalizada
 const mensajeBienvenida = document.getElementById("mensajeBienvenida");
 const btnUsuario = document.getElementById("btnUsuario");
-
 function mostrarBienvenida() {
   const nombre = localStorage.getItem("usuarioNombre");
   if (nombre) {
@@ -27,13 +26,31 @@ btnUsuario.addEventListener("click", () => {
 });
 mostrarBienvenida();
 
+// Productos
+const rolesSabores = [
+  "Nutella","Fresa","Cajeta","Oreo","Mango",
+  "Pistache","Café","Kinder","Plátano","Almendra"
+];
+const rolesContainer = document.getElementById("roles");
+rolesSabores.forEach(sabor => {
+  const div = document.createElement("div");
+  div.className = "item";
+  div.innerHTML = `<img src="rol.jpg"><h4>Rol ${sabor}</h4>
+                   <button onclick="agregarAlCarrito('Rol ${sabor}')">Agregar</button>`;
+  rolesContainer.appendChild(div);
+});
+
 // Carrito
 let carrito = {};
+let ubicacionCliente = null;
 function agregarAlCarrito(producto) {
+  carrito[producto] = (carrito[producto] || 0) + 1;
+  actualizarCarrito();
+}
+function quitarDelCarrito(producto) {
   if (carrito[producto]) {
-    carrito[producto]++;
-  } else {
-    carrito[producto] = 1;
+    carrito[producto]--;
+    if (carrito[producto] <= 0) delete carrito[producto];
   }
   actualizarCarrito();
 }
@@ -42,39 +59,68 @@ function actualizarCarrito() {
   lista.innerHTML = "";
   for (let producto in carrito) {
     const li = document.createElement("li");
-    li.textContent = `${producto} x${carrito[producto]}`;
+    li.innerHTML = `${producto} x${carrito[producto]} 
+      <button onclick="quitarDelCarrito('${producto}')">❌</button>`;
     lista.appendChild(li);
   }
 }
-document.getElementById("btnPedido").addEventListener("click", () => {
-  if (Object.keys(carrito).length === 0) {
-    alert("Tu carrito está vacío.");
-    return;
-  }
-  let pedido = "Quiero pedir: ";
-  for (let producto in carrito) {
-    pedido += `${producto} x${carrito[producto]}, `;
-  }
-  const url = `https://wa.me/529711315148?text=${encodeURIComponent(pedido)}`;
-  window.open(url, "_blank");
-});
 document.getElementById("btnVaciar").addEventListener("click", () => {
   carrito = {};
   actualizarCarrito();
 });
 
-// Compartir ubicación
-document.getElementById("btnUbicacion").addEventListener("click", () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((pos) => {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
-      const url = `https://wa.me/529711315148?text=Mi ubicación es: https://www.google.com/maps?q=${lat},${lon}`;
-      window.open(url, "_blank");
-    }, () => {
-      alert("No pudimos obtener tu ubicación.");
-    });
-  } else {
-    alert("Tu navegador no soporta geolocalización.");
+// Pedido con ubicación
+document.getElementById("btnPedido").addEventListener("click", () => {
+  if (Object.keys(carrito).length === 0) {
+    alert("Tu carrito está vacío.");
+    return;
+  }
+  let pedido = "Orden previa:\n";
+  for (let producto in carrito) {
+    pedido += `- ${producto} x${carrito[producto]}\n`;
+  }
+  if (ubicacionCliente) {
+    pedido += `\nUbicación: https://www.google.com/maps?q=${ubicacionCliente.lat},${ubicacionCliente.lon}`;
+  }
+  if (confirm(pedido + "\n\n¿Enviar por WhatsApp?")) {
+    const url = `https://wa.me/529711315148?text=${encodeURIComponent(pedido)}`;
+    window.open(url, "_blank");
   }
 });
+
+// Guardar ubicación
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition((pos) => {
+    ubicacionCliente = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+  });
+}
+
+// Reseñas
+const listaReseñas = document.getElementById("listaReseñas");
+function mostrarReseñas() {
+  listaReseñas.innerHTML = "";
+  const reseñas = JSON.parse(localStorage.getItem("reseñas") || "[]");
+  reseñas.forEach(r => {
+    const div = document.createElement("div");
+    div.className = "reseña";
+    div.innerHTML = `<strong>${r.nombre}</strong> - ${"⭐".repeat(r.estrellas)}<p>${r.texto}</p>`;
+    listaReseñas.appendChild(div);
+  });
+}
+document.getElementById("btnReseña").addEventListener("click", () => {
+  const nombre = prompt("Tu nombre:");
+  const estrellas = prompt("Calificación (1-5):");
+  const texto = prompt("Escribe tu reseña:");
+  if (nombre && estrellas && texto) {
+    const reseñas = JSON.parse(localStorage.getItem("reseñas") || "[]");
+    reseñas.push({ nombre, estrellas, texto });
+    localStorage.setItem("reseñas", JSON.stringify(reseñas));
+    mostrarReseñas();
+  }
+});
+mostrarReseñas();
+
+// PWA Service Worker
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
