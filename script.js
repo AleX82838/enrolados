@@ -40,60 +40,87 @@ rolesSabores.forEach(sabor => {
   rolesContainer.appendChild(div);
 });
 
-// Carrito
+// ================== CARRITO ==================
 let carrito = {};
 let ubicacionCliente = null;
+
 function agregarAlCarrito(producto) {
-  carrito[producto] = (carrito[producto] || 0) + 1;
-  actualizarCarrito();
-}
-function quitarDelCarrito(producto) {
   if (carrito[producto]) {
-    carrito[producto]--;
-    if (carrito[producto] <= 0) delete carrito[producto];
+    carrito[producto]++;
+  } else {
+    carrito[producto] = 1;
   }
   actualizarCarrito();
 }
+
+function quitarDelCarrito(producto) {
+  if (carrito[producto]) {
+    carrito[producto]--;
+    if (carrito[producto] <= 0) {
+      delete carrito[producto];
+    }
+    actualizarCarrito();
+  }
+}
+
 function actualizarCarrito() {
   const lista = document.getElementById("listaCarrito");
   lista.innerHTML = "";
   for (let producto in carrito) {
     const li = document.createElement("li");
     li.innerHTML = `${producto} x${carrito[producto]} 
-      <button onclick="quitarDelCarrito('${producto}')">❌</button>`;
+      <button onclick="quitarDelCarrito('${producto}')" class="btn-danger" style="padding:3px 8px; font-size:12px;">❌</button>`;
     lista.appendChild(li);
   }
 }
-document.getElementById("btnVaciar").addEventListener("click", () => {
-  carrito = {};
-  actualizarCarrito();
-});
 
-// Pedido con ubicación
 document.getElementById("btnPedido").addEventListener("click", () => {
   if (Object.keys(carrito).length === 0) {
     alert("Tu carrito está vacío.");
     return;
   }
-  let pedido = "Orden previa:\n";
+
+  let pedido = "🛒 Pedido Enrolados:%0A";
   for (let producto in carrito) {
-    pedido += `- ${producto} x${carrito[producto]}\n`;
+    pedido += `- ${producto} x${carrito[producto]}%0A`;
   }
+
   if (ubicacionCliente) {
-    pedido += `\nUbicación: https://www.google.com/maps?q=${ubicacionCliente.lat},${ubicacionCliente.lon}`;
+    pedido += `%0A📍 Ubicación: ${ubicacionCliente}`;
+  } else {
+    pedido += "%0A📍 El cliente no compartió ubicación.";
   }
-  if (confirm(pedido + "\n\n¿Enviar por WhatsApp?")) {
-    const url = `https://wa.me/529711315148?text=${encodeURIComponent(pedido)}`;
-    window.open(url, "_blank");
+
+  const url = `https://wa.me/529711315148?text=${pedido}`;
+  // 🔥 Se abre directo sin confirmar
+  window.location.href = url;
+});
+
+document.getElementById("btnVaciar").addEventListener("click", () => {
+  carrito = {};
+  actualizarCarrito();
+});
+
+// ================== UBICACIÓN ==================
+document.getElementById("btnUbicacion").addEventListener("click", () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        ubicacionCliente = `https://www.google.com/maps?q=${lat},${lon}`;
+        alert("✅ Ubicación guardada para el pedido.");
+      },
+      () => {
+        alert("❌ No pudimos obtener tu ubicación.");
+      }
+    );
+  } else {
+    alert("Tu navegador no soporta geolocalización.");
   }
 });
 
-// Guardar ubicación
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition((pos) => {
-    ubicacionCliente = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-  });
-}
+
 
 // Reseñas
 const listaReseñas = document.getElementById("listaReseñas");
@@ -125,7 +152,8 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("sw.js");
 }
 
-// Instalación PWA
+
+// ================== PWA ==================
 let deferredPrompt;
 const btnInstalar = document.getElementById("btnInstalar");
 
@@ -136,12 +164,16 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 btnInstalar.addEventListener("click", async () => {
-  btnInstalar.classList.add("hidden");
+  if (!deferredPrompt) {
+    alert("La instalación no está disponible en este momento.");
+    return;
+  }
   deferredPrompt.prompt();
   const { outcome } = await deferredPrompt.userChoice;
   if (outcome === "accepted") {
-    console.log("App instalada");
+    console.log("✅ App instalada correctamente");
+  } else {
+    console.log("❌ Instalación cancelada");
   }
   deferredPrompt = null;
 });
-
