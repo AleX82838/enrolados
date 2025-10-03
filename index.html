@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enrolados - Postres Gourmet</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <!-- Pantalla de carga -->
@@ -18,11 +19,12 @@
       <nav>
         <div class="brand">
           <img src="lgenrolados.png" alt="Logo" class="nav-logo">
-          <h1>Enrolados web demostracion</h1>
+          <h1>Enrolados web demo</h1>
         </div>
         <ul>
           <li><a href="#menu">Menú</a></li>
           <li><a href="#carrito">Carrito</a></li>
+          <li><a href="#reseñas">Reseñas</a></li>
           <li><a href="#about">Sobre Nosotros</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
@@ -46,18 +48,7 @@
       <h2>Nuestro Menú</h2>
 
       <h3>🍩 Roles Gourmet</h3>
-      <div class="menu-grid">
-        <div class="item"><img src="rol1.jpg"><h4>Rol Nutella</h4><button onclick="agregarAlCarrito('Rol Nutella')">Agregar</button></div>
-        <div class="item"><img src="rol2.jpg"><h4>Rol Fresa</h4><button onclick="agregarAlCarrito('Rol Fresa')">Agregar</button></div>
-        <div class="item"><img src="rol3.jpg"><h4>Rol Cajeta</h4><button onclick="agregarAlCarrito('Rol Cajeta')">Agregar</button></div>
-        <div class="item"><img src="rol4.jpg"><h4>Rol Oreo</h4><button onclick="agregarAlCarrito('Rol Oreo')">Agregar</button></div>
-        <div class="item"><img src="rol5.jpg"><h4>Rol Mango</h4><button onclick="agregarAlCarrito('Rol Mango')">Agregar</button></div>
-        <div class="item"><img src="rol6.jpg"><h4>Rol Pistache</h4><button onclick="agregarAlCarrito('Rol Pistache')">Agregar</button></div>
-        <div class="item"><img src="rol7.jpg"><h4>Rol Café</h4><button onclick="agregarAlCarrito('Rol Café')">Agregar</button></div>
-        <div class="item"><img src="rol8.jpg"><h4>Rol Kinder</h4><button onclick="agregarAlCarrito('Rol Kinder')">Agregar</button></div>
-        <div class="item"><img src="rol9.jpg"><h4>Rol Plátano</h4><button onclick="agregarAlCarrito('Rol Plátano')">Agregar</button></div>
-        <div class="item"><img src="rol10.jpg"><h4>Rol Almendra</h4><button onclick="agregarAlCarrito('Rol Almendra')">Agregar</button></div>
-      </div>
+      <div class="menu-grid" id="roles"></div>
 
       <h3>🍰 Carlota</h3>
       <div class="menu-grid">
@@ -85,6 +76,13 @@
       </div>
     </section>
 
+    <!-- Reseñas -->
+    <section id="reseñas">
+      <h2>⭐ Reseñas de Clientes</h2>
+      <div id="listaReseñas"></div>
+      <button id="btnReseña" class="btn">Agregar Reseña</button>
+    </section>
+
     <!-- Sobre Nosotros -->
     <section id="about">
       <h2>Sobre Enrolados</h2>
@@ -94,7 +92,7 @@
     <!-- Contacto -->
     <section id="contacto">
       <h2>Contacto</h2>
-      <button id="btnUbicacion" class="btn">Compartir Ubicación</button>
+      <p>WhatsApp: <a href="https://wa.me/529711315148" target="_blank">+52 1 971 131 5148</a></p>
     </section>
   </div>
 
@@ -104,4 +102,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
