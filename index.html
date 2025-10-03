@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enrolados - Postres Gourmet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Pantalla de carga -->
+  <div id="loader">
+    <img src="c:\Users\juega\OneDrive\Documents\logotipoenrolados.png.jpg" alt="Enrolados Logo" class="logo">
+  </div>
+
+  <!-- Contenido principal -->
+  <div id="content" class="hidden">
+    <header>
+      <nav>
+        <div class="brand">
+          <img src="c:\Users\juega\OneDrive\Documents\logotipoenrolados.png.jpg" alt="Logo" class="nav-logo">
+          <h1>Enrolados</h1>
+        </div>
+        <ul>
+          <li><a href="#menu">Menú</a></li>
+          <li><a href="#carrito">Carrito</a></li>
+          <li><a href="#about">Sobre Nosotros</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Bienvenida -->
+    <section class="bienvenida">
+      <h2 id="mensajeBienvenida"></h2>
+      <button id="btnUsuario" class="btn">Ingresar Nombre</button>
+    </section>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h2>Postres gourmet para todos los gustos</h2>
+      <p>Roles, Carlota, Flanes y Pastelitos con amor ❤️</p>
+    </section>
+
+    <!-- Menú -->
+    <section id="menu">
+      <h2>Nuestro Menú</h2>
+
+      <h3>🍩 Roles Gourmet</h3>
+      <div class="menu-grid">
+        <div class="item"><img src="rol1.jpg"><h4>Rol Nutella</h4><button onclick="agregarAlCarrito('Rol Nutella')">Agregar</button></div>
+        <div class="item"><img src="rol2.jpg"><h4>Rol Fresa</h4><button onclick="agregarAlCarrito('Rol Fresa')">Agregar</button></div>
+        <div class="item"><img src="rol3.jpg"><h4>Rol Cajeta</h4><button onclick="agregarAlCarrito('Rol Cajeta')">Agregar</button></div>
+        <div class="item"><img src="rol4.jpg"><h4>Rol Oreo</h4><button onclick="agregarAlCarrito('Rol Oreo')">Agregar</button></div>
+        <div class="item"><img src="rol5.jpg"><h4>Rol Mango</h4><button onclick="agregarAlCarrito('Rol Mango')">Agregar</button></div>
+        <div class="item"><img src="rol6.jpg"><h4>Rol Pistache</h4><button onclick="agregarAlCarrito('Rol Pistache')">Agregar</button></div>
+        <div class="item"><img src="rol7.jpg"><h4>Rol Café</h4><button onclick="agregarAlCarrito('Rol Café')">Agregar</button></div>
+        <div class="item"><img src="rol8.jpg"><h4>Rol Kinder</h4><button onclick="agregarAlCarrito('Rol Kinder')">Agregar</button></div>
+        <div class="item"><img src="rol9.jpg"><h4>Rol Plátano</h4><button onclick="agregarAlCarrito('Rol Plátano')">Agregar</button></div>
+        <div class="item"><img src="rol10.jpg"><h4>Rol Almendra</h4><button onclick="agregarAlCarrito('Rol Almendra')">Agregar</button></div>
+      </div>
+
+      <h3>🍰 Carlota</h3>
+      <div class="menu-grid">
+        <div class="item"><img src="carlota.jpg"><h4>Carlota de Limón</h4><button onclick="agregarAlCarrito('Carlota de Limón')">Agregar</button></div>
+      </div>
+
+      <h3>🍮 Flanes</h3>
+      <div class="menu-grid">
+        <div class="item"><img src="flan.jpg"><h4>Flan Clásico</h4><button onclick="agregarAlCarrito('Flan Clásico')">Agregar</button></div>
+      </div>
+
+      <h3>🧁 Pastelitos</h3>
+      <div class="menu-grid">
+        <div class="item"><img src="pastelito.jpg"><h4>Pastelito de Chocolate</h4><button onclick="agregarAlCarrito('Pastelito Chocolate')">Agregar</button></div>
+      </div>
+    </section>
+
+    <!-- Carrito -->
+    <section id="carrito">
+      <h2>🛒 Tu Carrito</h2>
+      <ul id="listaCarrito"></ul>
+      <div class="carrito-buttons">
+        <button id="btnPedido" class="btn-success">Hacer Pedido</button>
+        <button id="btnVaciar" class="btn-danger">Vaciar Carrito</button>
+      </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section id="about">
+      <h2>Sobre Enrolados</h2>
+      <p>Postres artesanales con pasión y frescura en cada bocado.</p>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <button id="btnUbicacion" class="btn">Compartir Ubicación</button>
+    </section>
+  </div>
+
+  <!-- Botón flotante WhatsApp -->
+  <a href="https://wa.me/529711315148" class="whatsapp-float" target="_blank">💬</a>
+
+  <script src="script.js"></script>
+</body>
+</html>

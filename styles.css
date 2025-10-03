@@ -1,0 +1,180 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fdfbfb;
+  color: #333;
+}
+
+/* Loader */
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+#loader img {
+  width: 150px;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+#content.hidden { display: none; }
+
+/* Header */
+header {
+  background: linear-gradient(to right, #ff7eb9, #ff758c);
+  color: white;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo {
+  width: 40px;
+  border-radius: 50%;
+}
+header ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+header a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+header a:hover {
+  color: #ffe8f0;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(to right, #ffdde1, #ee9ca7);
+  color: #fff;
+  border-radius: 0 0 30px 30px;
+}
+
+/* Bienvenida */
+.bienvenida {
+  text-align: center;
+  padding: 2rem;
+}
+.btn {
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #ff7eb9, #ee4c7c);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: linear-gradient(45deg, #ff95c8, #ff5f8c);
+}
+
+/* Catálogo */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.item {
+  background: #fff;
+  border-radius: 15px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+.item:hover {
+  transform: scale(1.05);
+}
+.item img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.item button {
+  margin-top: 10px;
+  padding: 10px;
+  background: linear-gradient(45deg, #ff7eb9, #ff4a88);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.item button:hover {
+  background: linear-gradient(45deg, #ff95c8, #ff5f8c);
+}
+
+/* Carrito */
+#carrito {
+  padding: 2rem;
+}
+#listaCarrito {
+  list-style: none;
+  padding: 0;
+}
+#listaCarrito li {
+  padding: 5px 0;
+}
+.carrito-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+.btn-success {
+  padding: 10px 20px;
+  background: #25d366;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-success:hover { background: #1ebc5b; }
+.btn-danger {
+  padding: 10px 20px;
+  background: #ff4a4a;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn-danger:hover { background: #e63333; }
+
+/* WhatsApp button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: white;
+  border-radius: 50%;
+  padding: 15px;
+  font-size: 24px;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
